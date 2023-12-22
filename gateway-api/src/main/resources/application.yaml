@@ -1,0 +1,23 @@
+server:
+  port: 8090
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: message-producer-api
+          uri: http://message-producer-api:8080
+          predicates:
+            - Path=/producer/**
+          filters:
+            - RewritePath=/producer/?(?<segment>.*), /api/v1/${segment}
+        - id: docker-command-api
+          uri: http://docker-dind:8080
+          predicates:
+            - Path=/docker/**
+          filters:
+            - RewritePath=/docker/?(?<segment>.*), /api/v1/${segment}
+        - id: websocket-server
+          uri: http://websocket-server:4000
+          predicates:
+            - Path=/websocket/**
