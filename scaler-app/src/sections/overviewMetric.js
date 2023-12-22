@@ -11,7 +11,7 @@ export const OverviewMetric = () => {
                     description="Queued messages"
                     value="10k"
                     colorIcon="#4ECDC4"
-                    background="#FFF"
+                    background="#FFFFFF"
                     icon={<QueueListIcon />}
                 />
             </Grid>
@@ -21,7 +21,7 @@ export const OverviewMetric = () => {
                     description="Message rates"
                     value="15/s"
                     colorIcon="#F4A261"
-                    background="#FFF"
+                    background="#FFFFFF"
                     icon={<PaperAirplaneIcon />}
                 />
             </Grid>
@@ -31,7 +31,7 @@ export const OverviewMetric = () => {
                     description="Consumers"
                     value="15"
                     colorIcon="#FF6B6B"
-                    background="#FFF"
+                    background="#FFFFFF"
                     icon={<UserPlusIcon />}
                 />
             </Grid>

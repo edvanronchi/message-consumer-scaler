@@ -74,7 +74,7 @@ const HEADER = {
     PIDs: "PIDS"
 };
 
-export const TerminalDockerStats = (props) => {
+export const TerminalDockerStats = () => {
     const [terminalMessages, setTerminalMessages] = useState([]);
 
     const handleTerminalSocket = (message) => {
