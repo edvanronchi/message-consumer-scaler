@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Box, Button, Card, Unstable_Grid2 as Grid, MenuItem, TextField} from "@mui/material";
 import * as toast from "../services/toast";
+import * as api from "../services/api";
 
 const MEMORY = [
     {
@@ -48,15 +49,19 @@ const consumerDefault = {
     cpu: '0.5',
     memory: '128m',
     replicas: 1,
-    difficult: 1
+    fibonacci: 40
 };
+
+const saveFileIdLocalStorage = (fileId, content) => {
+    localStorage.setItem(fileId, JSON.stringify(content));
+}
 
 export const CreateConsumer = () => {
     const [consumer, setConsumer] = useState(consumerDefault);
 
     const handleInputChangeConsumer = (e) => {
         let { name, value } = e.target;
-        value = name === 'replicas' || name === 'difficult' ? Number(value) : value;
+        value = name === 'replicas' || name === 'fibonacci' ? Number(value) : value;
 
         setConsumer((prevConsumer) => ({
             ...prevConsumer,
@@ -66,13 +71,17 @@ export const CreateConsumer = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(consumer);
-
-        toast.success('Mudar mensagem');
+        api.createConsumer(consumer).then((response) => {
+            saveFileIdLocalStorage(response.data.fileId, consumer)
+        });
+        toast.success('The consumer is being created. Please wait ⏱️');
     };
 
-    const isValidReplicas = Number.isInteger(Number(consumer.replicas)) && Number(consumer.replicas) >= 1 && Number(consumer.replicas) <= 10;
-    const isValidDifficult = Number.isInteger(Number(consumer.difficult)) && Number(consumer.difficult) >= 1 && Number(consumer.difficult) <= 100;
+    const isValidReplicas = consumer.replicas !== '' && Number.isInteger(Number(consumer.replicas))
+        && Number(consumer.replicas) >= 1 && Number(consumer.replicas) <= 10;
+
+    const isValidFibonacci = consumer.fibonacci !== '' && Number.isInteger(Number(consumer.fibonacci))
+        && Number(consumer.fibonacci) >= 1 && Number(consumer.fibonacci) <= 100;
 
     return (
         <Card sx={{height: '100%', background: '#FFF'}}>
@@ -131,14 +140,14 @@ export const CreateConsumer = () => {
                     <Grid xs={6} md={6} lg={6}>
                         <TextField
                             label="FIBONACCI NUMBER"
-                            name="difficult"
+                            name="fibonacci"
                             type="number"
                             variant="outlined"
                             title="Fibonacci number that the consumer will have to process for each message"
-                            defaultValue={consumerDefault.difficult}
+                            defaultValue={consumerDefault.fibonacci}
                             style={{width: '100%'}}
                             onChange={handleInputChangeConsumer}
-                            error={!isValidDifficult}
+                            error={!isValidFibonacci}
                             inputProps={{
                                 min: 1,
                                 max: 100,
@@ -153,7 +162,7 @@ export const CreateConsumer = () => {
                             color="primary"
                             style={{width: '100%'}}
                             onClick={handleSubmit}
-                            disabled={!isValidReplicas || !isValidDifficult}
+                            disabled={!isValidReplicas || !isValidFibonacci}
                         >
                             Create consumer
                         </Button>

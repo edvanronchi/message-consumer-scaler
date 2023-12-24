@@ -9,7 +9,7 @@ export function createConsumer(body) {
 }
 
 export function removeConsumer(id) {
-    return apiGateway.delete('/docker/up-docker-compose/' + id);
+    return apiGateway.delete('/docker/remove-docker-container/' + id);
 }
 
 export function sendMessage(body) {

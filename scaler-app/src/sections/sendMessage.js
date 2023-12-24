@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Box, Button, Card, TextField, Unstable_Grid2 as Grid} from "@mui/material";
 import * as api from "../services/api";
+import * as toast from "../services/toast";
 
 
 export const SendMessage = () => {
@@ -13,9 +14,11 @@ export const SendMessage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         api.sendMessage({ messagesPerSecond: Number(messagesPerSecond) })
+        toast.success('Message per second rate adjusted 😉');
     };
 
-    const isValidMessagesPerSecond = Number.isInteger(Number(messagesPerSecond)) && Number(messagesPerSecond) >= 0 && Number(messagesPerSecond) <= 1000;
+    const isValidMessagesPerSecond = messagesPerSecond !== '' && Number.isInteger(Number(messagesPerSecond))
+        && Number(messagesPerSecond) >= 0 && Number(messagesPerSecond) <= 1000;
 
     return (
         <Card sx={{height: '100%', background: '#FFF'}}>

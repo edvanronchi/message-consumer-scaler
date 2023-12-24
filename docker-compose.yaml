@@ -54,6 +54,8 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+      prometheus:
+        condition: service_started
 
   prometheus:
     build:
@@ -73,7 +75,7 @@ services:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
     ports:
-      #- "5672:5672"
+      - "5672:5672"
       - "10002:15672"
     restart: unless-stopped
     healthcheck:

@@ -1,13 +1,11 @@
 const express = require('express');
 const amqp = require('amqplib');
-const cors = require('cors');
 
 const app = express();
 const router = express.Router()
 const port = 8080;
 
 app.use(express.json());
-app.use(cors());
 
 let intervalId;
 let connection;
@@ -24,36 +22,31 @@ const setupRabbitMQ = async () => {
 };
 
 const sendMessages = () => {
-    const message = 'Olá, RabbitMQ!';
+    const message = 'Hi, RabbitMQ!';
     channel.publish('ex-message', '', Buffer.from(message));
 };
 
 router.post('/producer-message', async (req, res) => {
-    try {
-        const { messagesPerSecond } = req.body;
+    const { messagesPerSecond } = req.body;
 
-        if (!messagesPerSecond || isNaN(messagesPerSecond) || messagesPerSecond <= 0) {
-            return res.status(400).json({ error: 'A quantidade de mensagens por segundo deve ser um número maior que zero.' });
-        }
-
-        if (!connection || !channel) {
-            await connectToRabbitMQ();
-            await setupRabbitMQ();
-        }
-
-        clearInterval(intervalId);
-
-        intervalId = setInterval(sendMessages, 1000 / messagesPerSecond);
-
-        res.json({ success: true, message: `Enviando ${messagesPerSecond} mensagens por segundo para o RabbitMQ.` });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Ocorreu um erro ao enviar as mensagens.' });
+    if (!connection || !channel) {
+        await connectToRabbitMQ();
+        await setupRabbitMQ();
     }
+
+    clearInterval(intervalId);
+
+    if (messagesPerSecond === 0) {
+        return res.json({ success: true, message: `Stopping the message delivery to RabbitMQ`});
+    }
+
+    intervalId = setInterval(sendMessages, 1000 / messagesPerSecond);
+
+    res.json({ success: true, message: `Sending ${messagesPerSecond} messages per second to RabbitMQ` });
 });
 
 app.use('/api/v1', router);
 
 app.listen(port, () => {
-    console.log(`API rodando em http://localhost:${port}`);
+    console.log(`API service running on port ${port}`);
 });

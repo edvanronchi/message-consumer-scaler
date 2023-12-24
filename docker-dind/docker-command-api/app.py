@@ -15,9 +15,10 @@ def up_docker_compose():
     payload = request.json
 
     deploy = {
-        'cpus': payload['cpus'] or '0.5',
-        'memory': payload['memory'] or '256M',
+        'cpus': payload['cpu'] or '0.5',
+        'memory': payload['memory'] or '128M',
         'replicas': payload['replicas'] or 1,
+        'fibonacci': payload['fibonacci'] or 1,
     }
 
     file_docker_compose = service.create_file_docker_compose(deploy)
@@ -31,7 +32,7 @@ def up_docker_compose():
 
     return {
         'status': 'success',
-        'file_id': file_id
+        'fileId': file_id
     }
 
 

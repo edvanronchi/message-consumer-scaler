@@ -21,8 +21,7 @@ def create_file_docker_compose(deploy):
         'services': {
             service_name: {
                 'build': {
-                    'context': 'message-consumer-worker',
-                    'dockerfile': 'Dockerfile'
+                    'context': 'message-consumer-worker'
                 },
                 'deploy': {
                     'replicas': deploy['replicas'],
@@ -33,7 +32,10 @@ def create_file_docker_compose(deploy):
                         }
                     }
                 },
-                'networks': [network_name]
+                'networks': [network_name],
+                'environment': {
+                    'FIBONACCI': deploy['fibonacci']
+                }
             }
         },
         'networks': {

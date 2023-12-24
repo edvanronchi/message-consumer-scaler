@@ -4,6 +4,13 @@ server:
 spring:
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+
       routes:
         - id: message-producer-api
           uri: http://message-producer-api:8080

@@ -7,7 +7,6 @@ const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
         origin: "*",
-        methods: ["GET", "POST", "OPTIONS"]
     }
 });
 
@@ -15,8 +14,13 @@ io.on('connection', (socket) => {
     console.log('A client has connected');
 
     socket.on('terminal-socket', (message) => {
-        console.log('Client message:', message);
+        console.log('Client message: terminal-socket:', message);
         io.emit('terminal-socket', message);
+    });
+
+    socket.on('metric-socket', (message) => {
+        console.log('Client message: metric-socket:', message);
+        io.emit('metric-socket', message);
     });
 
     socket.on('disconnect', () => {

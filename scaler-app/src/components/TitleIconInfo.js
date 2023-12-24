@@ -13,7 +13,7 @@ export const TitleIconInfo = (props) => {
         [`& .${tooltipClasses.tooltip}`]: {
             backgroundColor: '#f5f5f9',
             color: 'rgba(0, 0, 0, 0.87)',
-            maxWidth: 220,
+            maxWidth: 440,
             fontSize: theme.typography.pxToRem(12),
             border: '1px solid #dadde9',
         },
@@ -30,16 +30,14 @@ export const TitleIconInfo = (props) => {
           <HtmlTooltip
               title={
                   <React.Fragment>
-                      <Typography color="inherit">Info</Typography>
-                      <em>{"And here's"}</em> <b>{'some'}</b> <u>{'amazing content'}</u>.{' '}
-                      {titleInfo}
+                      <p style={{textAlign: 'justify'}}>{titleInfo}</p>
                   </React.Fragment>
               }
           >
-          <IconButton >
-            <Info/>
-          </IconButton>
-        </HtmlTooltip>
+              <Box style={{display: 'flex', alignItems: 'center', color: '#656565', marginLeft: '5px'}}>
+                <Info/>
+              </Box>
+          </HtmlTooltip>
       </Box>
   );
 };

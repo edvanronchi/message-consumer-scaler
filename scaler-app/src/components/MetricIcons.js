@@ -5,7 +5,7 @@ export const MetricIcons = () => {
   return (
       <>
           <Box style={{display: 'flex', alignItems: 'center'}}>
-              <a title="Grafana" target="_blank" href="http://localhost:10000"
+              <a title="Grafana - Credentials (admin, grafana)" target="_blank" href="http://localhost:10000/d/Kn5xm-gZk/rabbitmq-overview?orgId=1&refresh=15s"
                  style={{textDecoration: 'none', color: 'inherit'}} rel="noreferrer">
                   <Avatar
                       src="/assets/logos/grafana.png"
@@ -27,7 +27,7 @@ export const MetricIcons = () => {
           </Box>
 
           <Box style={{display: 'flex', alignItems: 'center'}}>
-              <a title="RabbitMQ" target="_blank" href="http://localhost:10002"
+              <a title="RabbitMQ - Credentials (guest, guest)" target="_blank" href="http://localhost:10002"
                  style={{textDecoration: 'none', color: 'inherit'}} rel="noreferrer">
                   <Avatar
                       src="/assets/logos/rabbitmq.png"

@@ -4,6 +4,8 @@ import subprocess
 
 sio = socketio.AsyncClient()
 
+url_websocket_server = 'http://websocket-server:4000'
+
 
 def get_docker_stats():
     command = f"docker stats --no-stream --format 'json'"
@@ -18,18 +20,10 @@ async def send_message_terminal_socket():
         print('Message sent to terminal-socket')
 
 
-async def send_message_metric_socket():
-    while True:
-        await asyncio.sleep(1)
-        await sio.emit('metric-socket', get_docker_stats())
-        print('Message sent to metric-socket')
-
-
 @sio.event
 async def connect():
     print('Connection established')
     await asyncio.create_task(send_message_terminal_socket())
-    await asyncio.create_task(send_message_metric_socket())
 
 
 @sio.event
@@ -38,7 +32,7 @@ async def disconnect():
 
 
 async def main():
-    await sio.connect('http://websocket-server:4000')
+    await sio.connect(url_websocket_server)
     await sio.wait()
 
 
