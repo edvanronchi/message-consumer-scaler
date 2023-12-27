@@ -1,6 +1,6 @@
-import docker
-import service
 from flask import Flask, jsonify, request, Blueprint, make_response
+
+import service
 
 api_blueprint = Blueprint('api', __name__, url_prefix='/api/v1')
 
@@ -30,6 +30,8 @@ def up_docker_compose():
     if command_executed['status'] == 'error':
         return command_executed
 
+    service.save_to_mongo(file_id, deploy)
+
     return {
         'status': 'success',
         'fileId': file_id
@@ -45,24 +47,6 @@ def remove_docker_container(container_id):
         return command_executed
 
     return make_response('', 204)
-
-
-@api_blueprint.route('/containers', methods=['GET'])
-def docker_ps():
-    client = docker.from_env()
-
-    containers = client.containers.list()
-
-    containers_info = []
-    for container in containers:
-        containers_info.append({
-            'container_name': container.name,
-            'file_id': service.get_container_file_id(container.name),
-            'sequence': service.get_container_sequence(container.name),
-            'status': container.status,
-        })
-
-    return make_response(containers_info, 200)
 
 
 app = Flask(__name__)

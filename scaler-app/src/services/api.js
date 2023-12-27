@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const URL_GATEWAY_API = 'http://localhost:8090';
+
 const apiGateway = axios.create({
-    baseURL: 'http://localhost:8090'
+    baseURL: URL_GATEWAY_API
 });
 
 export function createConsumer(body) {

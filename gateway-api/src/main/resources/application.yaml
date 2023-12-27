@@ -28,3 +28,5 @@ spring:
           uri: http://websocket-server:4000
           predicates:
             - Path=/websocket/**
+          filters:
+            - RewritePath=/websocket/?(?<segment>.*), /${segment}

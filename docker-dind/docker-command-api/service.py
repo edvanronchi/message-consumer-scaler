@@ -1,7 +1,12 @@
 import subprocess
 import yaml
 import uuid
+import requests
 import os
+import json
+
+url_mongodb_consumer_api = os.environ.get('URL_MONGODB_CONSUMER_API', 'http://localhost:8091')
+
 
 def command(cmd: str):
     try:
@@ -9,6 +14,22 @@ def command(cmd: str):
         return message_success('Success executing command')
     except subprocess.CalledProcessError as e:
         return message_error('Error executing command: {0}'.format(e.output.decode()))
+
+
+def save_to_mongo(file_id: str, deploy):
+    payload = json.dumps({
+        'serviceName': str(file_id),
+        'cpu': deploy['cpus'],
+        'memory': deploy['memory'],
+        'replicas': deploy['replicas'],
+        'fibonacci': deploy['fibonacci']
+    })
+
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    requests.request("POST", url_mongodb_consumer_api + '/consumer', headers=headers, data=payload)
 
 
 def create_file_docker_compose(deploy):
@@ -55,6 +76,7 @@ def save_file_docker_compose(file, file_id):
 
     return {'file_id': file_id}
 
+
 def delete_file_docker_compose(file_id: str):
     os.remove('docker-compose-{0}.yaml'.format(file_id))
 
@@ -81,6 +103,7 @@ def get_command_remove_docker_container(container_id: str) -> str:
 
 def get_container_file_id(container_name: str) -> str:
     return container_name[12:48]
+
 
 def get_container_sequence(container_name: str) -> str:
     return container_name[49:]

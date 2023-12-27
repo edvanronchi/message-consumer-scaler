@@ -38,11 +38,7 @@ const CPU = [
     {
         value: '1',
         label: '1',
-    },
-    {
-        value: '2',
-        label: '2',
-    },
+    }
 ];
 
 const consumerDefault = {
@@ -51,10 +47,6 @@ const consumerDefault = {
     replicas: 1,
     fibonacci: 40
 };
-
-const saveFileIdLocalStorage = (fileId, content) => {
-    localStorage.setItem(fileId, JSON.stringify(content));
-}
 
 export const CreateConsumer = () => {
     const [consumer, setConsumer] = useState(consumerDefault);
@@ -71,9 +63,7 @@ export const CreateConsumer = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        api.createConsumer(consumer).then((response) => {
-            saveFileIdLocalStorage(response.data.fileId, consumer)
-        });
+        api.createConsumer(consumer);
         toast.success('The consumer is being created. Please wait ⏱️');
     };
 
