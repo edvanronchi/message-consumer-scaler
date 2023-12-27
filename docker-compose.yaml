@@ -47,6 +47,9 @@ services:
     build:
       context: mongodb-consumer-api
     container_name: mongodb-consumer-api
+    depends_on:
+      mongodb:
+        condition: service_started
 
   grafana:
     build:
