@@ -9,7 +9,7 @@
 
 ## Docker
 ```
-docker-compose up --build -d && \
+docker-compose up --build -d
 docker exec -d docker-dind sh -c "sh start.sh"
 ```
 
