@@ -1,9 +1,9 @@
-# Escalabilidade, Observabilidade e Processamento
+# Sistema de Escalabilidade e Monitoramento em Tempo Real
 
 ## 1. Introdução
 
 ### 1.1 Visão Geral
-O projeto oferece ferramentas abrangentes para gerenciar de maneira eficiente o envio e recebimento de mensagens em um sistema de mensageria. Possui a capacidade de ajuste dinâmico de consumers para lidar com diversas cargas de trabalho, permitindo a adição de configurações de hardware específicas para os consumers. Além disso, possibilita a visualização detalhada da aplicação e do processamento, assegurando um monitoramento contínuo.
+O projeto oferece ferramentas para gerenciar de maneira eficiente o envio e recebimento de mensagens em um sistema de mensageria. Possui a capacidade de ajuste dinâmico de consumers para lidar com diversas cargas de trabalho, permitindo a adição de configurações de hardware específicas para os consumers. Além disso, possibilita a visualização detalhada da aplicação e do processamento, assegurando um monitoramento contínuo.
 
 <img src="images/scaler_app.gif" width="70%" height="70%"/>
 
@@ -25,6 +25,7 @@ A seguir, algumas das principais tecnologias e ferramentas empregadas no projeto
 - Java (Spring Boot)
 - MongoDB
 - Node.js (Express)
+- Nginx
 - Python (Flask, Asyncio)
 - RabbitMQ
 - ReactJS
@@ -49,10 +50,11 @@ Um resumo das funções atendidas por cada aplicação.
 
 <img src="images/diagram.gif" width="70%" height="70%"/>
 
+
 ## 3. Instalação
 
 ### 3.1 Pré-requisitos
-Certifique-se de que o Docker está instalado e funcionando corretamente em seu sistema.
+Certifique-se de que o Docker está instalado e funcionando corretamente em seu sistema. Verifique se as portas 8080, 8090, 10000, 10001 e 10002 não estão atualmente em uso.
 
 ### 3.2 Instruções de Instalação
 Execute o seguinte comando para criar e iniciar os contêineres necessários:
@@ -61,7 +63,13 @@ docker-compose up --build -d
 docker exec -d docker-dind sh -c "sh start.sh"
 ```
 
-## 4 Desafios durante o desenvolvimento
+### 3.3 Acesso à Aplicação
+Para interagir com a aplicação, é necessário acessar o seguinte endereço:
+```
+http://localhost:8080
+```
+
+## 4 Desafios Durante o Desenvolvimento
 
 ### 4.1 Comunicação dos consumers com outros serviços
 Os consumers são containers que operam dentro de outro container (docker-dind). A única solução encontrada consistiu em utilizar o container principal (docker-dind) para facilitar a comunicação com outros serviços, como o RabbitMQ. Optou-se pelo uso do endereço padrão 172.17.0.1 para estabelecer a comunicação com o container principal. Em seguida, implementou-se o [HAProxy](docker-dind/haproxy/haproxy.cfg) para realizar o redirecionamento apropriado para cada serviço, conforme a porta especificada.
