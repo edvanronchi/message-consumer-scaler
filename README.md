@@ -5,7 +5,7 @@
 ### 1.1 Visão Geral
 O projeto oferece ferramentas para gerenciar de maneira eficiente o envio e recebimento de mensagens em um sistema de mensageria. Possui a capacidade de ajuste dinâmico de consumers para lidar com diversas cargas de trabalho, permitindo a adição de configurações de hardware específicas para os consumers. Além disso, possibilita a visualização detalhada da aplicação e do processamento, assegurando um monitoramento contínuo.
 
-<img src="images/scaler_app.gif" width="70%" height="70%"/>
+![](images/scaler_app.gif)
 
 ### 1.2 Objetivos
 - Observar o comportamento individual de cada consumidor por meio de suas configurações específicas
@@ -48,8 +48,7 @@ Um resumo das funções atendidas por cada aplicação.
 
 ### 2.3 Diagrama de Arquitetura
 
-<img src="images/diagram.gif" width="70%" height="70%"/>
-
+![](images/diagram.gif)
 
 ## 3. Instalação
 
