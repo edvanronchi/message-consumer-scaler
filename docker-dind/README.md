@@ -1,3 +1,3 @@
-# scaler-app
+# docker-dind
 
 ## Sobre o projeto
