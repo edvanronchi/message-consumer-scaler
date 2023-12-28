@@ -7,6 +7,7 @@ USER root
 
 WORKDIR /app
 
+COPY start.sh /app/
 COPY docker-command-api /app/docker-command-api
 COPY websocket-producer-docker-stats /app/websocket-producer-docker-stats
 COPY websocket-producer-rabbitmq /app/websocket-producer-rabbitmq

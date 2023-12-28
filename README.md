@@ -10,10 +10,7 @@
 ## Docker
 ```
 docker-compose up --build -d && \
-docker exec -d docker-dind sh -c "haproxy -f /usr/local/etc/haproxy/haproxy.cfg" && \
-docker exec -d docker-dind sh -c "python3 docker-command-api/app.py" && \
-docker exec -d docker-dind sh -c "python3 websocket-producer-docker-stats/app.py" &&\
-docker exec -d docker-dind sh -c "python3 websocket-producer-rabbitmq/app.py"
+docker exec -d docker-dind sh -c "sh start.sh"
 ```
 
 ## Roadmap
