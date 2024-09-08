@@ -58,7 +58,7 @@ Certifique-se de que o Docker está instalado e funcionando corretamente em seu 
 ### 3.2 Instruções de Instalação
 Execute o seguinte comando para criar e iniciar os contêineres necessários:
 ```sh
-docker-compose up --build -d
+docker compose up --build -d
 docker exec -d docker-dind sh -c "sh start.sh"
 ```
 
